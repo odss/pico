@@ -1,28 +1,25 @@
-import { h, Component } from 'preact';
-import { viewFactory } from '../base';
+import { h } from 'preact';
+import { viewFactory, BlockComponent } from '../base';
 
 
-class ListComponent extends Component {
-    render() {
-        let { block, children } = this.props;
-        let tag = block.attrs.type === 'unordered' ? 'ul' : 'li';
-        return h(tag, {
-            class: 'pico-core-list',
-            'data-pico-sid': block.id,
-            'data-pico-block': 'core.list'
-        }, children.map(child => h('li', null, child)));
+class ListComponent extends BlockComponent {
+    render({block}) {
+        let Tag = block.attrs.type === 'unordered' ? 'ul' : 'ol';
+        return (
+            <Tag class="pico-core-list" data-pico-sid={block.id}>
+                {this.blockChildren(block, child => <li>{child}</li> )}
+            </Tag>
+        );
     }
 }
 
-class LinkComponent extends Component {
-    render() {
-        let { block, children } = this.props;
-        return h('a', {
-            href: block.attrs.url,
-            class: 'pico-core-link',
-            'data-pico-id': block.id,
-            'data-pico-block': 'core.link'
-        }, [h('span', null, block.attrs.label)]);
+class LinkComponent extends BlockComponent {
+    render({block}) {
+        return (
+            <a href={block.attrs.url} class="pico-core-link" data-pico-id={block.id}>
+                {block.attrs.label}
+            </a>
+        );
     }
 }
 

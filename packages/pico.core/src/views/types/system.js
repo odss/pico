@@ -1,28 +1,19 @@
-import { h, Component } from 'preact';
-import { viewFactory } from '../base';
+import { h } from 'preact';
+import { viewFactory, BlockComponent } from '../base';
 
 
-export class WorkspaceComponent extends Component {
-    componentDidMount(){
-        this.remove = this.props.block.on('reset', () => this.forceUpdate());
-    }
-    componentWillUnmount(){
-        // this.remove()
-    }
-    render() {
-        let block = this.props.block;
-        let root = block.root;
-        debugger
-        return h('div', {
-            class: 'pico-core-workspace'
-        }, block.children().map(child => h(root.views.getView(child), {block: child})));
+export class WorkspaceComponent extends BlockComponent {
+    render({block}) {
+        return (<div class="pico-core-workspace">
+            {this.blockChildren(block)}
+        </div>)
     }
 }
-export class DefaultComponent extends Component {
-    render() {
-        return h('div', {
-            class: 'pico-core-default-block'
-        }, block.children().map(child => h(block.root.views.getView(child), {block: child})));
+export class DefaultComponent extends BlockComponent {
+    render({block}) {
+        return (<div class="pico-core-default-block">
+            {this.blockChildren(block)}
+        </div>)
     }
 }
 

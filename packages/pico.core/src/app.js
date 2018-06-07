@@ -4,19 +4,12 @@ import { buildStructure } from './blocks/index';
 
 
 export default class App {
-    constructor(blocks, views) {
+    constructor(blocks) {
         this._blocks = blocks;
-        this._views = views;
     }
     startup(container) {
-        this._create(container);
-
         let nodes = _loadStructure();
-        const root = this._blocks.create({name: 'core.workspace'});
-        root.views = this._views;
-        buildStructure(this._blocks, root, nodes);
-        this._views.render(this.$workspace, root);
-
+        this.root = buildStructure(this._blocks, nodes);
         // setTimeout(() => {
         //     let nodes = _loadStructure();
         //     nodes = nodes.splice(0, 5);
@@ -29,10 +22,7 @@ export default class App {
             this.$workspace.parentNode.removeChild(this.$workspace);
         }
     }
-    _create(container) {
-        this.$workspace = document.createElement('div');
-        container.appendChild(this.$workspace);
-    }
+
 }
 function _loadStructure() {
     return [{

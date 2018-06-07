@@ -1,40 +1,40 @@
-import { h, Component } from 'preact';
-import { viewFactory } from '../base';
+import { h } from 'preact';
+import { viewFactory, BlockComponent } from '../base';
 
 
-export class SectionComponent extends Component {
-    render() {
-        let { block, children } = this.props;
-        return h('div', {
-            class: 'pico-core-section',
-            'data-pico-sid': block.id,
-            'data-pico-block': 'core.section'
-        }, block.children().map(child => h(block.root.views.getView(child), {block: child})));
+export class LayoutComponent extends BlockComponent {
 
+    get name(){
+        return 'layout';
+    }
+
+    render({block}) {
+        let className = `pico-core-${this.name}`;
+        return (
+            <div class={className} data-pico-sid={block.id}>
+                {this.blockChildren(block)}
+            </div>
+        );
     }
 }
 
-export class ContainerComponent extends Component {
-    render() {
-        let { block, children } = this.props;
-        return h('div', {
-            class: 'pico-core-container',
-            'data-pico-sid': block.id,
-            'data-pico-block': 'core.container'
-        }, block.children().map(child => h(block.root.views.getView(child), {block: child})));
+
+export class SectionComponent extends LayoutComponent {
+    get name(){
+        return 'section';
+    }
+}
+export class ContainerComponent extends LayoutComponent {
+    get name(){
+        return 'container';
+    }
+}
+export class ColumnComponent extends LayoutComponent {
+    get name(){
+        return 'column';
     }
 }
 
-export class ColumnComponent extends Component {
-    render() {
-        let { block, children } = this.props;
-        return h('div', {
-            class: 'pico-core-column',
-            'data-pico-sid': block.id,
-            'data-pico-block': 'core.column'
-        }, block.children().map(child => h(block.root.views.getView(child), {block: child})));
-    }
-}
 export default [
     viewFactory('core.section', SectionComponent),
     viewFactory('core.container', ContainerComponent),
