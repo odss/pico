@@ -5,9 +5,8 @@ import form from './types/form';
 
 export const ALL_BLOCKS = [...system, ...layout, ...basic, ...form];
 
-export function buildStructure(container, data) {
-
-    const root = container.create({name: 'core.workspace'});
+export function buildStructure(container, root, data) {
+    root.reset();
     const map = {
         [0]: root
     };

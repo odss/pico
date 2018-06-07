@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "importHelpers": false,
+    "experimentalDecorators": true,
+    "noImplicitUseStrict": true,
+    "noEmitOnError": false,
+    "preserveConstEnums": true,
+    "allowUnusedLabels": true,
+    "outDir":"./src",
+    "baseUrl": ".",
+    "paths":{
+    }
+  },
+  "files": [
+    "ts/index.ts"
+  ]
+}

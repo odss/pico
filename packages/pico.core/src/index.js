@@ -1,3 +1,4 @@
+import STYLES from './main.scss';
 import BlockRegister from './block-register';
 import ViewRegister from './view-register';
 
@@ -9,11 +10,13 @@ import App from './app';
 
 export class Activator {
     async start(ctx) {
+        ctx.styles(STYLES);
         let blocks = new BlockRegister();
         let views = new ViewRegister(new PreactViewProvider());
         ALL_BLOCKS.map(block => blocks.add(block));
         ALL_VIEWS.map(item => views.set(item.name, item.view))
         this.app = new App(blocks, views);
+
         await this.app.startup(document.body);
     }
     stop() {

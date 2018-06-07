@@ -8,7 +8,7 @@ class FormComponent extends Component {
         return h('form', {
             class: 'pico-core-form',
             'data-pico-id': block.id,
-        }, children);
+        }, block.children().map(child => h(block.root.views.getView(child), {block: child})));
     }
 }
 
@@ -24,53 +24,66 @@ class LabelComponent extends Component {
 class InputComponent extends Component {
     render() {
         let { block } = this.props;
-        return h('div', {class:'s-form-group'}, [
-            block.attrs.label ? h('label', null, block.attrs.label) : null,
+        return h('div', {class:'s-form-text'}, [
             h('input', {
                 type: 'text',
-                class: 'pico-core-form-input',
                 value: block.attrs.value,
                 'data-pico-id': block.id,
-            })
+            }),
+            block.attrs.label ? h('label', null, block.attrs.label) : null
         ]);
     }
 }
 class SelectComponent extends Component {
     render() {
         let { block } = this.props;
-        return h('select', {
-            class: 'pico-core-form-select',
-            'data-pico-id': block.id,
-        });
+        return h('div', {class:'s-form-select'}, [
+            h('select', {
+                class: 'pico-core-form-select',
+                'data-pico-id': block.id,
+            })
+        ]);
     }
 }
 class RadioComponent extends Component {
     render() {
         let { block } = this.props;
-        return h('input', {
-            type: 'radio',
-            class: 'pico-core-form-radio',
-            'data-pico-id': block.id,
-        });
+        return h('div', {class:'s-form-radio'}, [
+            h('label', null, [
+                h('input', {
+                    type: 'radio',
+                    'data-pico-id': block.id,
+                }),
+                block.attrs.label
+            ])
+        ]);
     }
 }
 class CheckboxComponent extends Component {
     render() {
         let { block } = this.props;
-        return h('input', {
-            type: 'checkbox',
-            class: 'pico-core-form-checkbox',
-            'data-pico-id': block.id,
-        });
+        return h('div', {class:'s-form-checkbox'}, [
+            h('label', null, [
+                h('input', {
+                    type: 'checkbox',
+                    'data-pico-id': block.id,
+                }),
+                block.attrs.label
+            ])
+        ]);
     }
 }
 class TextareaComponent extends Component {
     render() {
         let { block } = this.props;
-        return h('textarea', {
-            class: 'pico-core-form-textarea',
-            'data-pico-id': block.id,
-        });
+        return h('div', {class:'s-form-text'}, [
+            h('textarea', {
+                type: 'text',
+                value: block.attrs.value,
+                'data-pico-id': block.id,
+            }),
+            block.attrs.label ? h('label', null, block.attrs.label) : null
+        ]);
     }
 }
 class ButtonComponent extends Component {

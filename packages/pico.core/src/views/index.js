@@ -17,8 +17,8 @@ export class PreactViewProvider {
 function pack(block, views){
     return h(
         views.getView(block),
-        {block},
-        block.children()
-            .map(child => pack(child, views))
+        {block}
+        // block.children()
+        //     .map(child => pack(child, views))
     );
 }

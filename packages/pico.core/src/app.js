@@ -12,8 +12,17 @@ export default class App {
         this._create(container);
 
         let nodes = _loadStructure();
-        let root = buildStructure(this._blocks, nodes);
+        const root = this._blocks.create({name: 'core.workspace'});
+        root.views = this._views;
+        buildStructure(this._blocks, root, nodes);
         this._views.render(this.$workspace, root);
+
+        // setTimeout(() => {
+        //     let nodes = _loadStructure();
+        //     nodes = nodes.splice(0, 5);
+        //     debugger
+        //     buildStructure(this._blocks, root, nodes);
+        // }, 2000);
     }
     dispose() {
         if (this.$workspace && this.$workspace.parentNode) {
@@ -27,8 +36,16 @@ export default class App {
 }
 function _loadStructure() {
     return [{
-        id: 100,
+        id: 80,
         parent: 0,
+        block: 'core.section'
+    }, {
+        id: 90,
+        parent: 80,
+        block: 'core.container'
+    }, {
+        id: 100,
+        parent: 90,
         block: 'core.form',
         attrs:{
             method: 'POST',
@@ -57,55 +74,67 @@ function _loadStructure() {
             label: 'Some smart label'
         }
     }, {
-            id: 20,
-            block: 'core.section2',
-            attrs: {
-                name: 'hero',
-            }
-        }, {
-            id: 30,
-            block: 'core.section',
-            attrs: {
-                name: 'work'
-            }
-        }, {
-            id: 10,
-            parent: 30,
-            block: 'core.list',
-            attrs: {
-                name: 'main-nav',
-                type: 'unordered'
-            }
-        }, {
-            id: 11,
-            parent: 10,
-            block: 'core.link',
-            attrs: {
-                name: 'link',
-                label: 'Link 1',
-                type: 'url',
-                url: 'https://example.com/',
-                newtab: true
-            }
-        }, {
-            id: 12,
-            parent: 10,
-            block: 'core.link',
-            attrs: {
-                name: 'to-page',
-                label: 'Link 2',
-                type: 'page',
-                url: '/page1'
-            }
-        }, {
-            id: 13,
-            parent: 10,
-            block: 'core.link',
-            attrs: {
-                name: 'to-page',
-                label: 'Link 3 (Work)',
-                type: 'section',
-                url: '#work'
-            }
-        }];
+        id: 140,
+        parent: 100,
+        block: 'core.form.radio',
+        attrs: {
+            label: 'Some smart label'
+        }
+    }, {
+        id: 150,
+        parent: 100,
+        block: 'core.form.checkbox',
+        attrs: {
+            label: 'Some smart label'
+        }
+    }, {
+        id: 20,
+        block: 'core.section'
+    }, {
+        id: 21,
+        parent: 20,
+        block: 'core.container'
+    }, {
+        id: 30,
+        block: 'core.section'
+    }, {
+        id: 10,
+        parent: 21,
+        block: 'core.list',
+        attrs: {
+            name: 'main-nav',
+            type: 'unordered'
+        }
+    }, {
+        id: 11,
+        parent: 10,
+        block: 'core.link',
+        attrs: {
+            name: 'link',
+            label: 'Link 1',
+            type: 'url',
+            url: 'https://example.com/',
+            newtab: true
+        }
+    }, {
+        id: 12,
+        parent: 10,
+        block: 'core.link',
+        attrs: {
+            name: 'to-page',
+            label: 'Link 2',
+            type: 'page',
+            url: '/page1'
+        }
+    }, {
+        id: 13,
+        parent: 10,
+        block: 'core.link',
+        attrs: {
+            name: 'to-page',
+            label: 'Link 3 (Work)',
+            type: 'section',
+            url: '#work'
+        }
+    }];
 }

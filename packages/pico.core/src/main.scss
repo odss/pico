@@ -1,0 +1,66 @@
+.pico-core-section {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.pico-core-container{
+    width: 90%;
+    max-width: 1000px;
+}
+.pico-core-form {
+    .s-form-text {
+        display: block;
+        position: relative;
+        padding: 1rem 0;
+
+        input, textarea {
+            display: block;
+            box-sizing: border-box;
+            height: 2rem;
+            width: 100%;
+            padding: 0;
+            background-color: transparent;
+            color: rgba(0,0,0,.8);
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,.2);
+            outline: 0;
+            box-shadow: none;
+            border-radius: 0;
+            font-size: 1rem;
+
+            &:focus {
+                border-color: #178df7;
+                border-width: 2px;
+
+                ~ label {
+                    color: #178df7;
+                }
+            }
+        }
+        input:focus{
+            height: calc(2rem + 1px);
+            margin-bottom: -1px;
+        }
+        label{
+            position: absolute;
+            top: 0;
+            display: block;
+            width: 100%;
+            color: rgba(0,0,0,.54);
+            font-size: .8rem;
+            font-weight: 400;
+            line-height: 1rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        textarea{
+            min-height: 4rem;
+        }
+    }
+    .s-form-radio {
+        margin: 0.5rem 0;
+    }
+}

@@ -7,7 +7,8 @@ export class Node {
         this._deep = 0;
         this._parent = null;
         this._children = [];
-        this._comparator = comparator
+        this._comparator = comparator;
+        this._listeners = {};
         this.data = data;
     }
     get parent() {
@@ -27,6 +28,7 @@ export class Node {
         this._children.forEach(node => node.reset());
         this._children = [];
         this._parent  = null;
+        this.emit('reset');
     }
     children() {
         return this._children.concat();
@@ -88,10 +90,13 @@ export class Node {
                 this._appendChild(node);
             }
             node.deep = this._deep + 1;
+            this.emit('add', node);
         }
     }
     removeChild(node){
-        this._removeChild(node);
+        if(this._removeChild(node)){
+            this.emit('remove', node);
+        }
     }
     compare(node) {
         return this._comparator(this, node);
@@ -106,6 +111,19 @@ export class Node {
             }
         }
         return node;
+    }
+    on(name, handler){
+        if(!this._listeners[name]){
+            this._listeners[name] = [];
+        }
+        this._listeners[name].push(handler);
+    }
+    emit(name, event=null){
+        if(this._listeners[name]){
+            for(let listener of this._listeners[name]){
+                listener(event);
+            }
+        }
     }
     toString() {
         return `Node(${this.data})`;
